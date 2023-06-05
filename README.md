@@ -1,2 +1,1 @@
-# app_server
-Django API server
+# Django-base-server
