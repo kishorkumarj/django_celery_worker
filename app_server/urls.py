@@ -21,12 +21,17 @@ from django.conf.urls.static import static
 from django.conf import settings
 from user import urls as auth_urls
 from user.views import UserDetailAPI
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/auth/', include(auth_urls)),
-    path("api/v1/user/<int:id>", UserDetailAPI.as_view())
+    path("api/v1/user/<int:id>", UserDetailAPI.as_view()),
+    path('', views.index)
 
 ]
+
+handler404 = views.handler404
+handler500 = views.handler500
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -11,10 +11,9 @@ from knox.views import (
     LogoutView as KnoxLogoutView,
     LogoutAllView as KnowLogoutAllView
 )
+# from django_q.tasks import async_task
 from user.models import User
 from .serializers import RegisterUserSerializer, UserSerializer
-
-# Create your views here.
 
 class RegisterUserAPI(KnoxLoginView):
     permission_classes = [permissions.AllowAny]
@@ -27,8 +26,6 @@ class RegisterUserAPI(KnoxLoginView):
         request.user = user
         # once user got created, create token for user.
         return super(RegisterUserAPI, self).post(request, format=None)
-        
-
 
 class LoginAPI(KnoxLoginView):
     permission_classes = [permissions.AllowAny]
@@ -45,7 +42,6 @@ class LoginAPI(KnoxLoginView):
 
         return super(LoginAPI, self).post(request, format=None)
 
-
 class LogoutAPI(KnoxLogoutView):
     def post(self, request):
         return super(LogoutAPI, self).post(request, format=None)
@@ -58,5 +54,4 @@ class UserDetailAPI(RetrieveAPIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAdminUser]
     def get_object(self):
-        print(self.request.META)
         return get_object_or_404(User, pk=self.kwargs.get('id'))
